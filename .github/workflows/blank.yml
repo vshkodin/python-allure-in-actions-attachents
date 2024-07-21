@@ -13,12 +13,17 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.12' # Adjust this to your Python version
+          python-version: '3.x' # Adjust this to your Python version
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pytest allure-pytest
+
+      - name: Install Allure Command Line
+        run: |
+          curl -sL https://github.com/allure-framework/allure2/releases/download/2.18.1/allure-2.18.1.tgz | tar -xz -C /opt/
+          sudo ln -s /opt/allure-2.18.1/bin/allure /usr/bin/allure
 
       - name: Run tests with Allure
         run: |
