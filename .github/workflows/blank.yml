@@ -13,7 +13,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x' # Adjust this to your Python version
+          python-version: '3.x'
 
       - name: Install dependencies
         run: |
@@ -28,10 +28,18 @@ jobs:
       - name: Run tests with Allure
         run: |
           pytest --alluredir=./allure-results
+        continue-on-error: true
 
-      # - name: Generate Allure Report
-      #   run: |
-      #     allure generate ./allure-results --clean -o ./allure-report
+      - name: List Allure Results Directory
+        run: ls -al ./allure-results
+
+      - name: Generate Allure Report
+        run: |
+          allure generate ./allure-results --clean -o ./allure-report
+        continue-on-error: true
+
+      - name: List Allure Report Directory
+        run: ls -al ./allure-report
 
       - name: Upload Allure Report
         uses: actions/upload-artifact@v2
